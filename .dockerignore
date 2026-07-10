@@ -1,0 +1,11 @@
+.git
+.gitignore
+.env
+venv
+frontend/node_modules
+frontend/dist
+backend/__pycache__
+*.pyc
+*.db
+pulseapi.db
+alembic/versions/__pycache__
