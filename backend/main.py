@@ -39,7 +39,7 @@ app.add_middleware(
         "http://localhost:3000",
         "http://127.0.0.1:3000",
         #Render frontent url
-        "https://pulseapi-frontend.onrender.com"
+        "https://pulseapi-frontend.onrender.com",
         
     ],
     allow_credentials=True,
