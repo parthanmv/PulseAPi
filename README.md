@@ -2,6 +2,10 @@
 
 PulseAPI is a full-stack API performance monitoring dashboard. Register, add API endpoints, track response times and uptime, analyze historical performance, and monitor API health in real time.
 
+## 🚀 Live Demo
+
+**[https://pulseapi-frontend.onrender.com](https://pulseapi-frontend.onrender.com)**
+
 ## Tech Stack
 
 ### Backend
