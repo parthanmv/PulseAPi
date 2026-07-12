@@ -6,8 +6,8 @@ import './Pages.css';
 export default function Login() {
   const navigate = useNavigate();
   const { login, isAuthenticated } = useAuth();
-  const [email, setEmail] = useState('admin@pulseapi.dev');
-  const [password, setPassword] = useState('password');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -17,6 +17,7 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
     setError('');
     setLoading(true);
     try {
@@ -40,7 +41,9 @@ export default function Login() {
         <p className="auth-subtitle">Sign in to monitor and analyze your APIs.</p>
 
         {error && (
-          <div style={{ margin: '0 0 16px 0', padding: '10px 14px', borderRadius: '8px', background: '#FEF2F2', border: '1px solid #FECACA', color: '#DC2626', fontSize: '0.875rem', textAlign: 'center' }}>
+          <div style={{ margin: '0 0 16px 0', padding: '10px 14px', borderRadius: '8px',
+            background: '#FEF2F2', border: '1px solid #FECACA', color: '#DC2626',
+            fontSize: '0.875rem', textAlign: 'center' }}>
             {error}
           </div>
         )}
@@ -48,11 +51,13 @@ export default function Login() {
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
             <label htmlFor="email">Email Address</label>
-            <input type="email" id="email" className="input" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            <input type="email" id="email" className="input" placeholder="Enter your email"
+              value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>
-            <input type="password" id="password" className="input" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <input type="password" id="password" className="input" placeholder="Enter your password"
+              value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
           <button type="submit" className="btn btn-primary w-full" disabled={loading}>
             {loading ? 'Signing In...' : 'Sign In'}

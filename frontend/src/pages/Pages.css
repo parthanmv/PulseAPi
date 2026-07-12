@@ -207,6 +207,45 @@
   color: var(--text-primary);
 }
 
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper .input {
+  width: 100%;
+  padding-right: 44px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease;
+}
+
+.password-toggle:hover {
+  color: var(--text-primary);
+}
+
+.field-error {
+  font-size: 0.8rem;
+  color: #DC2626;
+  line-height: 1.4;
+}
+
+.field-error:first-of-type {
+  margin-top: 2px;
+}
+
 .w-full {
   width: 100%;
   padding: 11px 20px;
