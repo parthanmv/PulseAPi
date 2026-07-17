@@ -56,10 +56,10 @@ def verify_otp(otp: str, otp_hash: str) -> bool:
         return False
 
 
-def send_otp_email(email: str, otp: str) -> bool:
+def send_otp_email(email: str, otp: str):
     if not settings.RESEND_API_KEY:
         print(f"\n[DEV MODE] OTP for {email}: {otp}\n")
-        return True
+        return True, None
 
     try:
         resend.api_key = settings.RESEND_API_KEY
@@ -83,7 +83,8 @@ def send_otp_email(email: str, otp: str) -> bool:
                 """,
             }
         )
-        return True
+        return True, None
     except Exception as e:
-        logger.error(f"Failed to send OTP email to {email}: {e}")
-        return False
+        msg = f"Failed to send OTP email to {email}: {e}"
+        logger.error(msg)
+        return False, msg

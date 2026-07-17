@@ -1,16 +1,28 @@
 import asyncio
+import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from alembic.config import Config
+from alembic import command
 
 from backend.api.auth import router as auth_router
 from backend.api.monitors import router as monitors_router
 from backend.scheduler.scheduler import start_scheduler
 
+logger = logging.getLogger(__name__)
+
+
+def run_migrations():
+    alembic_cfg = Config("alembic.ini")
+    command.upgrade(alembic_cfg, "head")
+    logger.info("Alembic migrations up to date.")
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    run_migrations()
     scheduler_task = asyncio.create_task(start_scheduler())
     yield
     scheduler_task.cancel()

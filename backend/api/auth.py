@@ -73,11 +73,11 @@ def register(user_in: UserCreate, db: Session = Depends(get_db)):
         db.add(record)
     db.commit()
 
-    sent = send_otp_email(user_in.email, otp)
+    sent, error_msg = send_otp_email(user_in.email, otp)
     if not sent:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to send verification email. Please try again.",
+            detail=error_msg or "Failed to send verification email.",
         )
 
     return OTPResponse(
@@ -189,11 +189,11 @@ def resend_otp(req: ResendOTPRequest, db: Session = Depends(get_db)):
     record.attempts = 0
     db.commit()
 
-    sent = send_otp_email(req.email, otp)
+    sent, error_msg = send_otp_email(req.email, otp)
     if not sent:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Failed to send verification email. Please try again.",
+            detail=error_msg or "Failed to send verification email.",
         )
 
     return OTPResponse(
