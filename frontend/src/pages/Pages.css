@@ -259,6 +259,114 @@
   color: var(--text-secondary);
 }
 
+/* OTP Input */
+.otp-input-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.otp-input {
+  width: 100%;
+  max-width: 220px;
+  padding: 14px 16px;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 14px;
+  text-align: center;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  background: var(--bg-input);
+  border: 2px solid var(--border);
+  color: var(--text-primary);
+  border-radius: var(--radius);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.otp-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+.otp-input::placeholder {
+  letter-spacing: 4px;
+  font-weight: 400;
+  font-size: 1.2rem;
+  color: var(--text-muted);
+}
+
+.field-hint {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* Password Strength */
+.password-strength {
+  margin-top: 8px;
+}
+
+.strength-bar {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.strength-fill {
+  height: 100%;
+  background: var(--border);
+  border-radius: 2px;
+  transition: width 0.3s ease, background 0.3s ease;
+}
+
+.strength-fill.medium {
+  background: var(--warning);
+}
+
+.strength-fill.strong {
+  background: var(--success);
+}
+
+.strength-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+}
+
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+}
+
+.check-item svg {
+  flex-shrink: 0;
+  opacity: 0.4;
+  transition: opacity 0.2s ease;
+}
+
+.check-item.valid {
+  color: var(--success);
+}
+
+.check-item.valid svg {
+  opacity: 1;
+}
+
+/* Spinner animation for Loader2 */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin {
+  animation: spin 0.6s linear infinite;
+}
+
 /* API List Table Styles */
 .api-list-wrapper {
   overflow: hidden;

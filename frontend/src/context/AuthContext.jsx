@@ -33,8 +33,7 @@ export function AuthProvider({ children }) {
       const response = await client.post('/api/auth/login', { email, password });
       const { access_token } = response.data;
       localStorage.setItem('token', access_token);
-      
-      // Load user profile details
+
       const userRes = await client.get('/api/auth/me');
       setUser(userRes.data);
       return true;
@@ -44,12 +43,10 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const register = async (email, password) => {
+  const register = async (name, email, password) => {
     try {
-      await client.post('/api/auth/register', { email, password });
-      // Login automatically upon successful signup
-      await login(email, password);
-      return true;
+      const response = await client.post('/api/auth/register', { name, email, password });
+      return response.data;
     } catch (error) {
       console.error('Registration action failed:', error);
       throw error;

@@ -45,3 +45,23 @@ class TokenData(BaseModel):
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
+
+
+class VerifyOTPRequest(BaseModel):
+    email: EmailStr
+    otp: str
+
+
+class ResendOTPRequest(BaseModel):
+    email: EmailStr
+
+
+class OTPResponse(BaseModel):
+    message: str
+    email: str
+
+
+class AuthResponse(BaseModel):
+    access_token: str
+    token_type: str
+    user: UserResponse
