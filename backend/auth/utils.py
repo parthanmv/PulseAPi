@@ -3,7 +3,8 @@ import random
 from datetime import datetime, timedelta, timezone
 
 import bcrypt
-import resend
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 from jose import jwt
 
 from backend.config import settings
@@ -57,32 +58,33 @@ def verify_otp(otp: str, otp_hash: str) -> bool:
 
 
 def send_otp_email(email: str, otp: str):
-    if not settings.RESEND_API_KEY:
+    if not settings.SENDGRID_API_KEY:
         print(f"\n[DEV MODE] OTP for {email}: {otp}\n")
         return True, None
 
+    message = Mail(
+        from_email=settings.SENDGRID_FROM_EMAIL,
+        to_emails=email,
+        subject="Your PulseAPI Verification Code",
+        html_content=f"""
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 480px; margin: 0 auto; padding: 32px 24px;">
+            <div style="text-align: center; margin-bottom: 24px;">
+                <div style="display: inline-block; width: 40px; height: 40px; background: #2563EB; border-radius: 8px; color: #fff; font-weight: 800; font-size: 1.3rem; line-height: 40px;">P</div>
+            </div>
+            <h1 style="text-align: center; font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; color: #111827;">Verify your email</h1>
+            <p style="text-align: center; color: #6B7280; font-size: 0.95rem; margin-bottom: 28px;">Enter this code to complete your PulseAPI registration.</p>
+            <div style="text-align: center; padding: 24px; background: #F8F9FA; border-radius: 12px; border: 1px solid #E5E7EB;">
+                <div style="font-size: 2.5rem; font-weight: 800; letter-spacing: 8px; color: #111827;">{otp}</div>
+            </div>
+            <p style="text-align: center; color: #9CA3AF; font-size: 0.8rem; margin-top: 24px;">This code expires in 5 minutes.</p>
+        </div>
+        """,
+    )
+
     try:
-        resend.api_key = settings.RESEND_API_KEY
-        resend.Emails.send(
-            {
-                "from": settings.RESEND_FROM_EMAIL,
-                "to": email,
-                "subject": "Your PulseAPI Verification Code",
-                "html": f"""
-                <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 480px; margin: 0 auto; padding: 32px 24px;">
-                    <div style="text-align: center; margin-bottom: 24px;">
-                        <div style="display: inline-block; width: 40px; height: 40px; background: #2563EB; border-radius: 8px; color: #fff; font-weight: 800; font-size: 1.3rem; line-height: 40px;">P</div>
-                    </div>
-                    <h1 style="text-align: center; font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; color: #111827;">Verify your email</h1>
-                    <p style="text-align: center; color: #6B7280; font-size: 0.95rem; margin-bottom: 28px;">Enter this code to complete your PulseAPI registration.</p>
-                    <div style="text-align: center; padding: 24px; background: #F8F9FA; border-radius: 12px; border: 1px solid #E5E7EB;">
-                        <div style="font-size: 2.5rem; font-weight: 800; letter-spacing: 8px; color: #111827;">{otp}</div>
-                    </div>
-                    <p style="text-align: center; color: #9CA3AF; font-size: 0.8rem; margin-top: 24px;">This code expires in 5 minutes.</p>
-                </div>
-                """,
-            }
-        )
+        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+        response = sg.send(message)
+        logger.info(f"OTP email sent to {email} (status {response.status_code})")
         return True, None
     except Exception as e:
         msg = f"Failed to send OTP email to {email}: {e}"
