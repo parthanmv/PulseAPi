@@ -1,3 +1,4 @@
+import logging
 import random
 from datetime import datetime, timedelta, timezone
 
@@ -6,6 +7,8 @@ import resend
 from jose import jwt
 
 from backend.config import settings
+
+logger = logging.getLogger(__name__)
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -81,5 +84,6 @@ def send_otp_email(email: str, otp: str) -> bool:
             }
         )
         return True
-    except Exception:
+    except Exception as e:
+        logger.error(f"Failed to send OTP email to {email}: {e}")
         return False
