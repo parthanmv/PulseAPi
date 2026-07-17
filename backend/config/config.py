@@ -21,13 +21,6 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = int(
         os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30")
     )
-    SENDGRID_API_KEY: str = os.getenv("SENDGRID_API_KEY", "")
-    SENDGRID_FROM_EMAIL: str = os.getenv(
-        "SENDGRID_FROM_EMAIL", "PulseAPI <noreply@example.com>"
-    )
-    OTP_EXPIRE_MINUTES: int = int(os.getenv("OTP_EXPIRE_MINUTES", "5"))
-    OTP_RESEND_SECONDS: int = int(os.getenv("OTP_RESEND_SECONDS", "60"))
-    OTP_MAX_ATTEMPTS: int = int(os.getenv("OTP_MAX_ATTEMPTS", "5"))
 
     class Config:
         extra = "ignore"

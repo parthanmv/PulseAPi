@@ -259,41 +259,6 @@
   color: var(--text-secondary);
 }
 
-/* OTP Input */
-.otp-input-wrapper {
-  display: flex;
-  justify-content: center;
-}
-
-.otp-input {
-  width: 100%;
-  max-width: 220px;
-  padding: 14px 16px;
-  font-size: 2rem;
-  font-weight: 800;
-  letter-spacing: 14px;
-  text-align: center;
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  background: var(--bg-input);
-  border: 2px solid var(--border);
-  color: var(--text-primary);
-  border-radius: var(--radius);
-  outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.otp-input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-light);
-}
-
-.otp-input::placeholder {
-  letter-spacing: 4px;
-  font-weight: 400;
-  font-size: 1.2rem;
-  color: var(--text-muted);
-}
-
 .field-hint {
   font-size: 0.8rem;
   color: var(--text-secondary);

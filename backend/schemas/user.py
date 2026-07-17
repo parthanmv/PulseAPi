@@ -47,20 +47,6 @@ class UserLogin(BaseModel):
     password: str
 
 
-class VerifyOTPRequest(BaseModel):
-    email: EmailStr
-    otp: str
-
-
-class ResendOTPRequest(BaseModel):
-    email: EmailStr
-
-
-class OTPResponse(BaseModel):
-    message: str
-    email: str
-
-
 class AuthResponse(BaseModel):
     access_token: str
     token_type: str
